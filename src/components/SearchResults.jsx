@@ -56,9 +56,9 @@ const SearchResults = props => {
         <h3 className={classes.title}>Search Results</h3>
         {photos.length !== 0 && (
           <p className={classes.subTitle}>
-            hover on the image to see{" "}
-            <span style={{ color: baseColor }}>distance</span>(smaller value
-            represents higher simlarity); click to see the full image
+            Hover on the image to see{" "}
+            <span style={{ color: baseColor }}>Euclidean distance</span>(smaller value
+            represents higher simlarity), click to see the full image
           </p>
         )}
       </div>
