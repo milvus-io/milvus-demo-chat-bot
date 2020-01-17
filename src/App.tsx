@@ -3,18 +3,19 @@ import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import QueryProvider from "./contexts/QueryContext";
 import Setting from "./containers/Setting";
 import SearchResults from "./components/SearchResults";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      display: "flex",
-      overflow: "hidden"
-    }
-  })
-);
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const App: React.FC = () => {
+  const isMobile = !useMediaQuery("(min-width:1000px)");
+
+  const useStyles = makeStyles({
+    root: {
+      flexGrow: 1,
+      background: "#1F2023",
+      display: isMobile ? "block" : "flex",
+      overflow: isMobile ? "auto" : "hidden"
+    }
+  });
   const classes = useStyles({});
   const [images, setImages]: any = useState([]);
   const [loading, setLoading]: any = useState(false);

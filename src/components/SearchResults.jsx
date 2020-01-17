@@ -3,32 +3,33 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import Gallery from "./Gallary";
 import { baseColor } from "../utils/color";
-
-const useStyles = makeStyles(theme =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      overflowX: "hidden",
-      overflowY: "auto",
-      padding: "80px 60px",
-      display: "flex",
-      flexDirection: "column",
-      backgroundColor: "#28292E"
-    },
-    title: {
-      margin: "20px 0px 10px",
-      fontSize: "20px",
-      color: "#F5F5F5"
-    },
-    subTitle: {
-      fontSize: "15px",
-      color: "#F1F1F1",
-      marginBottom: "１0px !important"
-    }
-  })
-);
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const SearchResults = props => {
+  const isMobile = !useMediaQuery("(min-width:1000px)");
+  const useStyles = makeStyles(theme =>
+    createStyles({
+      root: {
+        flexGrow: 1,
+        overflowX: "hidden",
+        overflowY: "auto",
+        padding: isMobile ? "10px" : "80px 60px",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "#28292E"
+      },
+      title: {
+        margin: "20px 0px 10px",
+        fontSize: "20px",
+        color: "#F5F5F5"
+      },
+      subTitle: {
+        fontSize: "15px",
+        color: "#F1F1F1",
+        marginBottom: "１0px !important"
+      }
+    })
+  );
   const classes = useStyles({});
   const { images = [] } = props;
   const [currentImage, setCurrentImage] = useState(0);
@@ -57,8 +58,8 @@ const SearchResults = props => {
         {photos.length !== 0 && (
           <p className={classes.subTitle}>
             Hover on the image to see{" "}
-            <span style={{ color: baseColor }}>Euclidean distance</span>(smaller value
-            represents higher simlarity), click to see the full image
+            <span style={{ color: baseColor }}>Euclidean distance</span>(smaller
+            value represents higher simlarity), click to see the full image
           </p>
         )}
       </div>
