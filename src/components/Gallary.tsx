@@ -45,7 +45,7 @@ const Gallary = (props: any) => {
         fontSize: "8vw"
       },
       distant: {
-        fontSize: "1vw",
+        fontSize: "14px",
         zIndex: 1000,
         color: "#fafafa",
         backgroundColor: "#000",
