@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import QueryProvider from "./contexts/QueryContext";
+import Header from "./components/Header";
+import QA from "./components/QA";
 import Setting from "./containers/Setting";
-import SearchResults from "./components/SearchResults";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const App: React.FC = () => {
@@ -11,9 +12,15 @@ const App: React.FC = () => {
   const useStyles = makeStyles({
     root: {
       flexGrow: 1,
-      background: "#1F2023",
+      background: "#666769",
       display: isMobile ? "block" : "flex",
       overflow: isMobile ? "auto" : "hidden"
+    },
+    main: {
+      height: "calc(100vh - 60px)",
+      maxWidth: "700px",
+      margin: "60px auto 0 auto",
+      backgroundColor: "#28292E"
     }
   });
   const classes = useStyles({});
@@ -22,21 +29,11 @@ const App: React.FC = () => {
   return (
     <QueryProvider>
       <div className={classes.root}>
-        <Setting setImages={setImages} setLoading={setLoading} />
-        <SearchResults images={images} />
-        {loading && (
-          <div
-            style={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              left: "0",
-              top: "0",
-              backgroundColor: "#000",
-              opacity: 0.5
-            }}
-          ></div>
-        )}
+        <Header></Header>
+        {!isMobile && <Setting setImages={setImages} setLoading={setLoading} />}
+        <div className={classes.main}>
+          <QA isMobile={isMobile}></QA>
+        </div>
       </div>
     </QueryProvider>
   );

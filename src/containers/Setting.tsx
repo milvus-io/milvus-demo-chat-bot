@@ -262,10 +262,10 @@ const Setting = (props: any) => {
 
   return (
     <div className={classes.setting}>
-      <div className={classes.header}>
+      {/* <div className={classes.header}>
         <img src={Logo} width="150px" alt="logo" />
         <p>Image Search Demo</p>
-      </div>
+      </div> */}
       <div className={classes.configHead}>
         <h4 className={classes.config}>Search</h4>
         {/* <h4 className={classes.clear} onClick={clear}>
