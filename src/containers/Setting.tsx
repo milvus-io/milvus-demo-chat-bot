@@ -251,12 +251,12 @@ const Setting = (props: any) => {
   };
 
   useEffect(() => {
-    count().then((res: any) => {
-      const { data, status } = res || {};
-      if (status === 200) {
-        setTotalNum(data);
-      }
-    });
+    // count().then((res: any) => {
+    //   const { data, status } = res || {};
+    //   if (status === 200) {
+    //     setTotalNum(data);
+    //   }
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

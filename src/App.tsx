@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import QueryProvider from "./contexts/QueryContext";
 import Header from "./components/Header";
 import QA from "./components/QA";
-import Setting from "./containers/Setting";
+// import Setting from "./containers/Setting";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const App: React.FC = () => {
@@ -24,13 +24,11 @@ const App: React.FC = () => {
     }
   });
   const classes = useStyles({});
-  const [images, setImages]: any = useState([]);
-  const [loading, setLoading]: any = useState(false);
   return (
     <QueryProvider>
       <div className={classes.root}>
         <Header></Header>
-        {!isMobile && <Setting setImages={setImages} setLoading={setLoading} />}
+        {/* {!isMobile && <Setting setImages={setImages} setLoading={setLoading} />} */}
         <div className={classes.main}>
           <QA isMobile={isMobile}></QA>
         </div>
