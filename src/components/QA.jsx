@@ -1,48 +1,50 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Divider, TextareaAutosize, Snackbar } from "@material-ui/core";
-import SendIcon from "@material-ui/icons/Send";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { ArrowForward } from "@material-ui/icons";
 import { queryContext } from "../contexts/QueryContext";
 
+const DAYS = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
 const QA = props => {
   const textArea = useRef(null);
   const resultContainer = useRef(null);
+  const [time, setTime] = useState("")
   const [qaList, setQaList] = useState([
-    { type: "question", text: "问题" },
-    { type: "answer", text: "回答" }
+    { type: "answer", text: "该 AI 问答系统包含33万条银行业务相关的问答。在下方对话框中输入问题，你的金融管家小M将会给出回答。（Demo 仅支持中文问答）" }
   ]);
-  const [loading, setLoading] = useState(false);
+
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const isMobile = props.isMobile;
   const { search } = useContext(queryContext);
+  const { setLoading, loading } = props
 
   const useStyles = makeStyles({
     wrapper: {
       display: "flex",
-      width: isMobile ? "auto" : "500px",
+      width: "100%",
+      flex: 1,
       flexDirection: "column"
     },
     content: {
-      flex: isMobile ? "0 0 60vh" : "0 0 62vh",
+      height: "calc(100vh - 8rem - 340px)",
       overflowY: "auto",
-      color: "#fff",
+      color: "#000",
       padding: isMobile ? "20px" : "40px",
       fontSize: isMobile ? "12px" : "15px"
     },
     textarea: {
       position: "relative",
-      flex: "0 0 200px",
+      flex: "0 0 154px",
       padding: "20px",
-      backgroundColor: "rgb(40, 41, 46)"
+      backgroundColor: "#fff",
+      borderTop: "1px solid #B0B0B9"
     },
     item: {
       display: "flex",
-      marginTop: isMobile ? "20px" : " 60px"
+      marginTop: "16px"
     },
     avatar: {
-      flex: "0 0 100x",
       width: "60px",
       height: "60px",
       borderRadius: "50%",
@@ -56,27 +58,30 @@ const QA = props => {
       display: "flex",
       marginLeft: "20px",
       alignItems: "center",
-      maxWidth: "70%",
       backgroundColor: "#fff",
-      padding: "10px 18px",
+      padding: "14px 21px",
+      maxWidth: "300px",
+      lineHeight: 1.6,
       color: "#000",
       borderRadius: "10px",
       ".question &": {
-        backgroundColor: "#AEE5FF"
-      }
+        backgroundColor: "#C7EDFF"
+      },
+      ".answer &": {
+        backgroundColor: "#E5E5E5"
+      },
     },
     send: {
       position: "absolute",
-      top: isMobile ? "20px" : "50px",
+      bottom: "20px",
       right: "30px",
       height: "60px",
       width: "60px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#4FC4F9",
-      borderRadius: "50%",
-      color: "#fff",
+
+      color: "#B0B0B9",
       cursor: "pointer"
     },
     triangle: {
@@ -97,6 +102,7 @@ const QA = props => {
   const classes = useStyles({});
 
   const handleSend = e => {
+
     const value = textArea.current.value;
     if (!value.trim()) {
       setMessage("请输入问题");
@@ -122,10 +128,26 @@ const QA = props => {
         setLoading(false);
       }
     });
-    if (loading) {
-      return;
-    }
+
   };
+
+
+
+  useEffect(() => {
+    const getTime = () => {
+      const now = new Date()
+      const year = now.getFullYear()
+      const month = now.getMonth() + 1
+      const day = now.getDay()
+      const date = now.getDate()
+      const hour = now.getHours()
+      const minutes = now.getMinutes()
+      const seconds = now.getSeconds()
+      return `${year}年${month}月${date}日 ${DAYS[day]} ${hour}:${minutes}:${seconds}`
+    }
+    setTime(getTime())
+
+  }, [])
 
   useEffect(() => {
     resultContainer.current.scrollTop = 10000;
@@ -134,10 +156,10 @@ const QA = props => {
   return (
     <div className={classes.wrapper}>
       <div ref={resultContainer} className={classes.content}>
-        <p>该 AI 问答系统包含12万条医疗相关的问答。</p>
-        <p> 在下方对话框中输入问题，你的健康管家小M将会给出回答。</p>
-        <p style={{ color: "#B0B0B9" }}>（Demo 仅支持中文问答）</p>
-
+        {/* <p>该 AI 问答系统包含12万条医疗相关的问答。</p>
+        <p> 在下方对话框中输入问题，你的健康管家小M将会给出回答。</p> */}
+        {/* <p style={{ color: "#B0B0B9" }}>（Demo 仅支持中文问答）</p> */}
+        <p style={{ textAlign: "center" }}>{time}</p>
         {qaList.map((v, i) => {
           if (v.type === "answer") {
             return (
@@ -159,12 +181,12 @@ const QA = props => {
                 style={{ flexDirection: "row-reverse" }}
                 key={i}
               >
-                <AccountCircleIcon style={{ fontSize: 50 }} />
+                {/* <AccountCircleIcon style={{ fontSize: 50 }} /> */}
                 <div className={classes.text} style={{ margin: "0 20px 0 0" }}>
-                  <div
+                  {/* <div
                     className={classes.triangle}
                     style={{ right: "-10px" }}
-                  ></div>
+                  ></div> */}
                   <p>{v.text}</p>
                 </div>
               </div>
@@ -172,7 +194,7 @@ const QA = props => {
           }
         })}
         {loading && (
-          <div style={{ textAlign: "center" }}>正在查询相关问题,请稍后...</div>
+          <div style={{ textAlign: "center", marginTop: "10px" }}>正在查询相关问题,请稍后...</div>
         )}
       </div>
       <Divider
@@ -183,18 +205,17 @@ const QA = props => {
         <TextareaAutosize
           ref={textArea}
           aria-label="empty textarea"
-          placeholder="请输入问题，比如：脸上的逗逗怎么治"
+          placeholder="请输入问题，比如：银行面签后，公积金贷款多久能下来"
           rows={10}
           style={{
             width: "100%",
             boxSizing: "border-box",
             border: "none",
-            backgroundColor: "#28292E",
-            color: "#fff"
+            color: "#000"
           }}
         />
         <div className={classes.send}>
-          <SendIcon fontSize="large" onClick={handleSend}></SendIcon>
+          <ArrowForward fontSize="large" onClick={handleSend}></ArrowForward>
         </div>
       </div>
       <Snackbar

@@ -3,7 +3,7 @@ declare global {
     _env_: any;
   }
 }
-let endpoint = `http://192.168.1.58:5000`;
+let endpoint = `http://40.117.75.127:5003`;
 if (window._env_ && window._env_.API_URL) {
   endpoint = window._env_.API_URL;
 }
