@@ -19,7 +19,7 @@ const Header = props => {
   const classes = useStyles({});
   return (
     <header className={classes.header}>
-      <p className={classes.text}>AI 问答系统</p>
+      <p className={classes.text}>AI 问答系统 powered by Milvus</p>
       {props.loading && <p>思考中。。。</p>}
     </header>
   );
