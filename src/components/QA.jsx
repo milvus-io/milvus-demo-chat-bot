@@ -18,7 +18,7 @@ const QA = (props) => {
     {
       type: "answer",
       text:
-        "This is a QA system containing 20000 insurance questiones. Enter your question in the dialog below, we will answer you! (Only English Q & A is supported)",
+        "This is a Q&A system containing 20000 insurance questiones. Enter your question in the dialog below, we will answer you! (Only English Q&A is supported)",
     },
   ]);
 
@@ -234,7 +234,7 @@ const QA = (props) => {
         <TextareaAutosize
           ref={textArea}
           aria-label="empty textarea"
-          placeholder="Please enter a question, such as: Does Travelers Insurance Have Renters Insurance ?"
+          placeholder="Please enter a question, such as: does travelers insurance have renters insurance ?"
           rows={10}
           style={{
             width: "100%",
