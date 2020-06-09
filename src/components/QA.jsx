@@ -221,7 +221,7 @@ const QA = (props) => {
         <TextareaAutosize
           ref={textArea}
           aria-label="empty textarea"
-          placeholder="Please enter a question, such as:Does Travelers Insurance Have Renters Insurance?"
+          placeholder="请输入问题，比如：银行面签后，公积金贷款多久能下来?"
           rows={10}
           style={{
             width: "100%",
