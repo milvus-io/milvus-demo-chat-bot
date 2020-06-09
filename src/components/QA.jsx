@@ -1,10 +1,15 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Divider, TextareaAutosize, Snackbar } from "@material-ui/core";
+import {
+  Divider,
+  TextareaAutosize,
+  Snackbar,
+  CircularProgress,
+} from "@material-ui/core";
 import { ArrowForward } from "@material-ui/icons";
 import { queryContext } from "../contexts/QueryContext";
 
-const DAYS = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+const DAYS = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const QA = (props) => {
   const textArea = useRef(null);
   const resultContainer = useRef(null);
@@ -13,7 +18,7 @@ const QA = (props) => {
     {
       type: "answer",
       text:
-        "该 AI 问答系统包含33万条银行业务相关的问答。在下方对话框中输入问题，你的金融管家小M将会给出回答。（Demo 仅支持中文问答）",
+        "This is a QA system containing 20000 insurance questiones. Enter your question in the dialog below, we will answer you! (Only English Q & A is supported)",
     },
   ]);
 
@@ -21,7 +26,6 @@ const QA = (props) => {
   const [message, setMessage] = useState("");
   const isMobile = props.isMobile;
   const { search } = useContext(queryContext);
-  const { setLoading, loading } = props;
 
   const useStyles = makeStyles({
     wrapper: {
@@ -123,19 +127,27 @@ const QA = (props) => {
       }, 800);
       return;
     }
-    setLoading(true);
     setQaList((list) => {
       let text = textArea.current.value;
       textArea.current.value = "";
-      return [...list, { type: "question", text }];
+      return [
+        ...list,
+        { type: "question", text },
+        { type: "answer", loading: true, text: "" },
+      ];
     });
     search({ query_text: value }).then((res) => {
       const { status, data } = res || {};
       if (status === 200) {
         setQaList((list) => {
-          return [...list, { type: "answer", text: data }];
+          return list.map((v) => {
+            if (v.loading) {
+              v.loading = false;
+              v.text = data;
+            }
+            return v;
+          });
         });
-        setLoading(false);
       }
     });
   };
@@ -150,7 +162,7 @@ const QA = (props) => {
       const hour = now.getHours();
       const minutes = now.getMinutes();
       const seconds = now.getSeconds();
-      return `${year}年${month}月${date}日 ${DAYS[day]} ${hour}:${minutes}:${seconds}`;
+      return ` ${hour}:${minutes}:${seconds} ${DAYS[day]} ${year}/${month}/${date}`;
     };
     setTime(getTime());
   }, []);
@@ -184,7 +196,13 @@ const QA = (props) => {
                     className={`${classes.triangle}`}
                     style={{ left: "-10px" }}
                   ></div>
-                  <p>{v.text}</p>
+                  {v.loading ? (
+                    <CircularProgress
+                      style={{ color: "#333" }}
+                    ></CircularProgress>
+                  ) : (
+                    <p>{v.text}</p>
+                  )}
                 </div>
               </div>
             );
@@ -207,11 +225,6 @@ const QA = (props) => {
             );
           }
         })}
-        {loading && (
-          <div style={{ textAlign: "center", marginTop: "10px" }}>
-            正在查询相关问题,请稍后...
-          </div>
-        )}
       </div>
       <Divider
         variant="middle"
@@ -221,7 +234,7 @@ const QA = (props) => {
         <TextareaAutosize
           ref={textArea}
           aria-label="empty textarea"
-          placeholder="请输入问题，比如：银行面签后，公积金贷款多久能下来?"
+          placeholder="Please enter a question, such as: Does Travelers Insurance Have Renters Insurance ?"
           rows={10}
           style={{
             width: "100%",
@@ -229,6 +242,7 @@ const QA = (props) => {
             border: "none",
             color: "#000",
             fontFamily: "Roboto",
+            fontSize: "15px",
           }}
           onKeyDown={handleKeyDown}
         />
