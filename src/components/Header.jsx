@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { texts } from "../lan";
+const lanKey = window._env_ && window._env_.LAN === "cn" ? "cn" : "en";
+const { title } = texts[lanKey];
 const Header = (props) => {
   const useStyles = makeStyles({
     header: {
@@ -19,7 +21,7 @@ const Header = (props) => {
   const classes = useStyles({});
   return (
     <header className={classes.header}>
-      <p className={classes.text}>AI Q&A System powered by Milvus</p>
+      <p className={classes.text}>{title}</p>
     </header>
   );
 };

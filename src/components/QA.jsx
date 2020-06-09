@@ -8,8 +8,11 @@ import {
 } from "@material-ui/core";
 import { ArrowForward } from "@material-ui/icons";
 import { queryContext } from "../contexts/QueryContext";
+import { texts } from "../lan";
 
-const DAYS = ["Mon", "Tues", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const lanKey = window._env_ && window._env_.LAN === "cn" ? "cn" : "en";
+const { tip, week, placeholder, notEmpty } = texts[lanKey];
+
 const QA = (props) => {
   const textArea = useRef(null);
   const resultContainer = useRef(null);
@@ -17,8 +20,7 @@ const QA = (props) => {
   const [qaList, setQaList] = useState([
     {
       type: "answer",
-      text:
-        "This is a Q&A system containing 20000 insurance questiones. Enter your question in the dialog below, we will answer you! (Only English Q&A is supported)",
+      text: tip,
     },
   ]);
 
@@ -35,6 +37,7 @@ const QA = (props) => {
       flexDirection: "column",
     },
     content: {
+      flex: 1,
       height: "calc(100vh - 8rem - 340px)",
       overflowY: "auto",
       color: "#000",
@@ -92,10 +95,6 @@ const QA = (props) => {
       right: "30px",
       height: "60px",
       width: "60px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-
       color: "#B0B0B9",
       cursor: "pointer",
     },
@@ -119,7 +118,7 @@ const QA = (props) => {
   const handleSend = (e) => {
     const value = textArea.current.value;
     if (!value.trim()) {
-      setMessage("请输入问题");
+      setMessage(notEmpty);
       setOpen(true);
 
       setTimeout(() => {
@@ -153,16 +152,20 @@ const QA = (props) => {
   };
 
   useEffect(() => {
+    const addZero = (num) => (num < 10 ? `0${num}` : num);
     const getTime = () => {
       const now = new Date();
       const year = now.getFullYear();
-      const month = now.getMonth() + 1;
-      const day = now.getDay();
+      const month = addZero(now.getMonth() + 1);
+      const day = addZero(now.getDay());
       const date = now.getDate();
-      const hour = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
-      return ` ${hour}:${minutes}:${seconds} ${DAYS[day]} ${year}/${month}/${date}`;
+      const hour = addZero(now.getHours());
+      const minutes = addZero(now.getMinutes());
+      const seconds = addZero(now.getSeconds());
+      console.log(week, day);
+      return `${year}/${month}/${date}  ${
+        week[parseInt(day)]
+      } ${hour}:${minutes}:${seconds}`;
     };
     setTime(getTime());
   }, []);
@@ -234,8 +237,8 @@ const QA = (props) => {
         <TextareaAutosize
           ref={textArea}
           aria-label="empty textarea"
-          placeholder="Please enter a question, such as: does travelers insurance have renters insurance ?"
-          rows={10}
+          placeholder={placeholder}
+          rows={8}
           style={{
             width: "100%",
             boxSizing: "border-box",
