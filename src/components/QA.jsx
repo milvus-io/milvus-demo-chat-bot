@@ -38,7 +38,7 @@ const QA = (props) => {
     },
     content: {
       flex: 1,
-      height: "calc(100vh - 8rem - 340px)",
+      maxHeight: "calc(100vh - 8rem - 340px)",
       overflowY: "auto",
       color: "#000",
       padding: isMobile ? "20px" : "40px",
