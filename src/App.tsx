@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import QueryProvider from "./contexts/QueryContext";
 import Header from "./components/Header";
 import Menu from "./components/Menu";
+import RegisterPrompt from './components/RegisterPrompt'
+
 
 import QA from "./components/QA";
 // import Setting from "./containers/Setting";
@@ -34,6 +36,9 @@ const App: React.FC = () => {
     },
   });
   const classes = useStyles({});
+
+
+
   return (
     <QueryProvider>
       <div className={classes.root}>
@@ -46,6 +51,7 @@ const App: React.FC = () => {
             loading={loading}
             setLoading={setLoading}
           ></QA>
+          <RegisterPrompt isMobile={isMobile} />
         </div>
       </div>
     </QueryProvider>
