@@ -4,11 +4,7 @@ import { queryContext } from "../contexts/QueryContext";
 
 const RegisterPrompt: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
   const { dialog, setDialog } = useContext(queryContext);
-
-
   const { open } = dialog;
-
-
   // remind users to register every 30s
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
@@ -21,7 +17,7 @@ const RegisterPrompt: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
         }
         setDialog({
           open: true,
-          component: <RegisterForm />
+          component: <RegisterForm />,
         });
       }, 30000);
     }

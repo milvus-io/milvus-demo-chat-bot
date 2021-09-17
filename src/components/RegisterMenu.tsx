@@ -2,19 +2,20 @@ import React, { useRef } from "react";
 import { makeStyles, Theme, Link } from "@material-ui/core";
 import github from "../images/github.svg";
 import slack from "../images/slack.svg";
+import { useDifferentSourceLink } from "../hooks";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    position: "fixed",
-    left: "-130px",
-    top: "50%",
+    position: "absolute",
     display: "flex",
     flexDirection: "column",
     border: "1px solid #eee",
     boxShadow: "3px 3px 5px rgba(0,0,0,0.02)",
     padding: "24px",
     background: "#fff",
-    transform: "translatY(-50%)",
+    left: "-130px",
+    top: "50%",
+    transform: "translateY(-50%)",
     transition: "all 0.2s linear",
     borderRadius: "0 4px 4px 0",
 
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
     [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
       padding: "16px",
+      left: "-105px",
     },
   },
   iconButton: {
@@ -44,26 +46,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const getLink = (isFromZilliz: boolean) => ({
-  git_link: isFromZilliz
-    ? "https://github.com/milvus-io/bootcamp#readme"
-    : "https://bit.ly/3htS3ma",
-  slack_link: isFromZilliz
-    ? "https://join.slack.com/t/milvusio/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ"
-    : "https://bit.ly/3ooMQ0p",
-});
-
-const RegisterMenu = () => {
+const RegisterMenu = (props: { className?: string }): JSX.Element => {
+  const { className = "" } = props;
   const classes = useStyles();
   const menuRef = useRef<HTMLDivElement>(null!);
-  const search = new URLSearchParams(window.location.search).get("isZilliz");
-  const { slack_link } = getLink(search === "true");
+  const link = useDifferentSourceLink();
 
   return (
-    <div className={classes.root} ref={menuRef}>
+    <div className={`${classes.root} ${className}`} ref={menuRef}>
       <div className={classes.iconButton}>
         <img src={github} alt="github-logo" />
-
         <Link
           href="https://github.com/milvus-io/bootcamp/tree/master/solutions/question_answering_system"
           className="link-btn"
@@ -74,7 +66,7 @@ const RegisterMenu = () => {
       </div>
       <div className={classes.iconButton}>
         <img src={slack} alt="slack-logo" />
-        <Link href={slack_link} underline="none" className="link-btn">
+        <Link href={link} underline="none" className="link-btn">
           Join Channel
         </Link>
       </div>

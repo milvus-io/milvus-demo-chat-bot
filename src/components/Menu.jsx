@@ -1,11 +1,34 @@
-import React from 'react'
+import React from 'react';
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flex: " 0 0 80px",
+    display: 'flex',
+    background: "#000",
+    textAlign: "center",
+    paddingTop: "20px",
+    flexDirection: 'column',
+    alignItems: 'center',
+    position: 'relative',
+    zIndex: 10,
+
+    '& img': {
+      width: '40px',
+      height: '40px',
+      padding: '16px 0'
+    }
+  },
+}));
 
 const Menu = () => {
-  return (
-    <div style={{ flex: " 0 0 80px", background: "#000", textAlign: "center", paddingTop: "20px" }}>
-      <img src="/favicon.png" alt="logo" style={{ width: "40px" }}></img>
-    </div>
-  )
-}
+  const classes = useStyles();
 
-export default Menu
+  return (
+    <div className={classes.root}>
+      <img src="/favicon.png" alt="logo"></img>
+    </div>
+  );
+};
+
+export default Menu;

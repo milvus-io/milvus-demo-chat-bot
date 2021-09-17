@@ -9,6 +9,7 @@ import {
 import { ArrowForward } from "@material-ui/icons";
 import { queryContext } from "../contexts/QueryContext";
 import { texts } from "../lan";
+import RegisterMenu from "./RegisterMenu";
 
 const lanKey = window._env_ && window._env_.LAN === "cn" ? "cn" : "en";
 const { tip, week, placeholder, notEmpty } = texts[lanKey];
@@ -38,7 +39,7 @@ const QA = (props) => {
     },
     content: {
       flex: 1,
-      maxHeight: "calc(100vh - 8rem - 340px)",
+      maxHeight: 'calc(100vh - 340px)',
       overflowY: "auto",
       color: "#000",
       padding: isMobile ? "20px" : "40px",
@@ -50,6 +51,8 @@ const QA = (props) => {
       padding: "20px",
       backgroundColor: "#fff",
       borderTop: "1px solid #B0B0B9",
+      height: '340px',
+
       "& :focus": {
         outline: "none",
       },
@@ -121,6 +124,10 @@ const QA = (props) => {
         borderRight: "10px solid #fff",
       },
     },
+    absoluteBox: {
+      position: 'absolute',
+      zIndex: 9
+    }
   }));
   const classes = useStyles({});
 
@@ -192,6 +199,9 @@ const QA = (props) => {
 
   return (
     <div className={classes.wrapper}>
+      {
+        !isMobile && <RegisterMenu className={classes.absoluteBox} />
+      }
       <div ref={resultContainer} className={classes.content}>
         {/* <p>该 AI 问答系统包含12万条医疗相关的问答。</p>
         <p> 在下方对话框中输入问题，你的健康管家小M将会给出回答。</p> */}

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     display: (props: any) => (props.isMobile ? "block" : "flex"),
     overflow: (props: any) => (props.isMobile ? "auto" : "hidden"),
     maxWidth: "700px",
-    margin: "4rem auto",
+    margin: "0 auto",
     boxShadow:
       " 0 1.1px 2.9px rgba(0, 0, 0, 0.044),0 2.5px 6.8px rgba(0, 0, 0, 0.063),0 4.5px 12.3px rgba(0, 0, 0, 0.078),0 7.4px 20.4px rgba(0, 0, 0, 0.092),0 12.2px 33.6px rgba(0, 0, 0, 0.107),0 21.3px 58.7px rgba(0, 0, 0, 0.126),0 46px 127px rgba(0, 0, 0, 0.17)",
   },
@@ -30,6 +30,11 @@ const useStyles = makeStyles({
     backgroundColor: "#fff",
     height: "100%",
     width: "100%",
+  },
+
+  fixedBox: {
+    position: "fixed",
+    left: "-130px",
   },
 });
 
@@ -50,9 +55,8 @@ const App: React.FC = () => {
             loading={loading}
             setLoading={setLoading}
           ></QA>
-          {/* <RegisterPrompt isMobile={isMobile} /> */}
-          <RegisterMenu />
         </div>
+        {isMobile && <RegisterMenu className={classes.fixedBox} />}
       </div>
     </QueryProvider>
   );
