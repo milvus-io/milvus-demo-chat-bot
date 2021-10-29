@@ -1,5 +1,5 @@
 # => Build container
-FROM node:alpine as builder
+FROM mhart/alpine-node:14 as builder
 WORKDIR /app
 COPY package.json .
 RUN yarn
