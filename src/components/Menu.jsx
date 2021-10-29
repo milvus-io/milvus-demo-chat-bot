@@ -26,7 +26,6 @@ const Menu = () => {
 
   return (
     <div className={classes.root}>
-      <img src="/favicon.png" alt="logo"></img>
     </div>
   );
 };
