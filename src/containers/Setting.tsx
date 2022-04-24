@@ -4,7 +4,7 @@ import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import CloseIcon from "@material-ui/icons/Close";
 import Slider from "@material-ui/core/Slider";
-import { DropzoneArea } from "material-ui-dropzone";
+import DropArea  from "../components/DropArea";
 import { baseColor } from "../utils/color";
 import Logo from "./Logo.svg";
 import { delayRunFunc } from "../utils/Helper";
@@ -302,7 +302,7 @@ const Setting = (props: any) => {
               </Fab>
             </div>
           ) : (
-            <DropzoneArea
+            <DropArea
               acceptedFiles={["image/*"]}
               filesLimit={1}
               dropzoneText={`click to upload / drag a image here`}
